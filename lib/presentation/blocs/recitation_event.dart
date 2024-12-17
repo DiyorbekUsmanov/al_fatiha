@@ -4,10 +4,10 @@ class OnStartRecording extends RecitationEvent {}
 
 class OnFinishRecording extends RecitationEvent {}
 
+class OnSendRecording extends RecitationEvent {}
+
 class OnPlayRecording extends RecitationEvent {}
 
-class OnSendRecording extends RecitationEvent {
-  final String? filePath;
+class OnPausePlayback extends RecitationEvent {}
 
-  OnSendRecording({this.filePath});
-}
+class OnResumePlayback extends RecitationEvent {}

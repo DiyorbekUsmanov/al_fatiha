@@ -1,10 +1,8 @@
 import 'package:al_fatiha/core/services/log_services.dart';
 import 'package:al_fatiha/presentation/blocs/recitation_bloc.dart';
-import 'package:flutter/cupertino.dart';
+import 'package:al_fatiha/presentation/widgets/controlRecording.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_sound/public/flutter_sound_recorder.dart';
-
 import '../../data/models/SurahModel.dart';
 import '../blocs/recitation_event.dart';
 import '../blocs/recitation_state.dart';
@@ -108,111 +106,7 @@ class RecitationPage extends StatelessWidget {
                   ),
                   Expanded(
                     flex: 2,
-                    child: state.status == "initial"
-                        ? Column(
-                            mainAxisAlignment: MainAxisAlignment.spaceAround,
-                            children: [
-                                const Text(
-                                  "Qiroatni yozib yuborish uchun quyidagi\ntugmani 1 marta bosing",
-                                  textAlign: TextAlign.center,
-                                  style: TextStyle(
-                                    fontSize: 14,
-                                    fontWeight: FontWeight.bold,
-                                    color: Colors.black87,
-                                  ),
-                                ),
-                                const Text(
-                                  "Qiroatni 10dan 120 sekundgacha yuboring",
-                                  style: TextStyle(
-                                    fontSize: 12,
-                                    color: Colors.grey,
-                                  ),
-                                ),
-                                Container(
-                                  margin: const EdgeInsets.only(bottom: 16),
-                                  child: GestureDetector(
-                                    onTap: () {
-                                      bloc.add(OnStartRecording());
-                                    },
-                                    child: Container(
-                                      padding: const EdgeInsets.all(30),
-                                      decoration: const BoxDecoration(
-                                        color: Color(0xFF30BF77), // Green color
-                                        shape: BoxShape.circle,
-                                      ),
-                                      child: const Icon(
-                                        Icons.mic,
-                                        size: 32,
-                                        color: Colors.white,
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                              ])
-                        // : state.status == "recording"
-                        //     ? StreamBuilder<RecordingDisposition>(
-                        //         stream: bloc.recorder.dispositionStream(),
-                        //         builder: (context, snapshot) {
-                        //           final duration =
-                        //               snapshot.data?.duration ?? Duration.zero;
-                        //           final minutes = duration.inMinutes
-                        //               .remainder(60)
-                        //               .toString()
-                        //               .padLeft(2, '0');
-                        //           final seconds = duration.inSeconds
-                        //               .remainder(60)
-                        //               .toString()
-                        //               .padLeft(2, '0');
-                        //           LogService.w("time is: $duration}");
-                        //
-                        //           return Column(
-                        //             mainAxisAlignment:
-                        //                 MainAxisAlignment.spaceAround,
-                        //             children: [
-                        //               Text(
-                        //                 "$minutes:$seconds",
-                        //                 style: const TextStyle(fontSize: 20),
-                        //               ),
-                        //               Container(
-                        //                 margin:
-                        //                     const EdgeInsets.only(bottom: 16),
-                        //                 child: GestureDetector(
-                        //                   onTap: () {
-                        //                     LogService.w("time is: $duration}");
-                        //                     bloc.add(OnFinishRecording());
-                        //                   },
-                        //                   child: Container(
-                        //                     padding: const EdgeInsets.all(30),
-                        //                     decoration: const BoxDecoration(
-                        //                       color: Color(
-                        //                           0xFF30BF77), // Green color
-                        //                       shape: BoxShape.circle,
-                        //                     ),
-                        //                     child: const Icon(
-                        //                       Icons.stop_rounded,
-                        //                       size: 32,
-                        //                       color: Colors.white,
-                        //                     ),
-                        //                   ),
-                        //                 ),
-                        //               ),
-                        //             ],
-                        //           );
-                        //         },
-                        //       )
-                            : Column(
-                                children: [
-                                  // Play the recorded file
-                                  GestureDetector(
-                                    onTap: () {
-                                      //TODO
-                                      // Implement playback logic here
-                                    },
-                                    child: const Icon(Icons.play_arrow),
-                                  ),
-                                  //TODO
-                                ],
-                              ),
+                    child: controlRecording(context, bloc, state),
                   )
                 ],
               ),

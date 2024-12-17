@@ -38,10 +38,10 @@ dependencies:
   youtube_player_flutter: ^9.1.1
   equatable: ^2.0.7
   flutter_bloc: ^8.0.0
-  flutter_sound: ^9.17.8
   path_provider: ^2.0.11
   record: ^5.2.0
   just_audio: ^0.9.42
+  logger: ^2.5.0
 
 dev_dependencies:
   flutter_test:

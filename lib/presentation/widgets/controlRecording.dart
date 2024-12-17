@@ -102,7 +102,6 @@ Widget controlRecording(
                             borderRadius: BorderRadius.circular(25),
                           ),
                           child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                             children: [
                               Expanded(
                                 flex: 1,
@@ -112,48 +111,51 @@ Widget controlRecording(
                                   },
                                   icon: const Icon(Icons.play_arrow),
                                   style: ElevatedButton.styleFrom(
-                                    backgroundColor:
-                                        Colors.grey[200], // Color of the button
+                                    backgroundColor: Colors.grey[200], // Color of the button
                                   ),
                                 ),
                               ),
                               Expanded(
-                                flex: 3,
-                                child: GestureDetector(
-                                  onTap: () {
-                                    final bloc = context.read<RecitationBloc>();
-
-                                    // Check if the recording exists before proceeding
-                                    if (bloc.state.recordingPath != null) {
-                                      // Create the SenderMessageModel with the audio and text message
-                                      final senderMessage = SenderMessageModel(
-                                        text: "Fotiha surasini qiroat qilish",
-                                        audioPath: bloc.state.recordingPath!,
-                                      );
-
-                                      // Navigate to a page with the updated chatWidget
-                                      Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                          builder: (context) => chatWidget(),
-                                        ),
-                                      );
-                                    }
-                                  },
-                                  child: Container(
-                                    padding: const EdgeInsets.all(12),
-                                    decoration: BoxDecoration(
-                                      color: const Color(0xFF30BF77),
-                                      borderRadius: BorderRadius.circular(25),
-                                    ),
-                                    child: const Row(
-                                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                                      children: [
-                                        Text(
-                                          "Yuborish",
-                                          style: TextStyle(fontSize: 12, color: Colors.white),
-                                        ),
-                                      ],
+                                flex: 5,
+                                child: Container(
+                                  padding: EdgeInsets.symmetric(horizontal: 4),
+                                  child: GestureDetector(
+                                    //TODO
+                                    // onTap: () {
+                                    //   final bloc = context.read<RecitationBloc>();
+                                    //
+                                    //   if (bloc.state.recordingPath != null) {
+                                    //     final senderMessage = SenderMessageModel(
+                                    //       text: "Fotiha surasini qiroat qilish",
+                                    //       audioPath: bloc.state.recordingPath!,
+                                    //     );
+                                    //
+                                    //     Navigator.push(
+                                    //       context,
+                                    //       MaterialPageRoute(
+                                    //         builder: (context) => chatWidget(),
+                                    //       ),
+                                    //     );
+                                    //   }
+                                    // },
+                                    child: Container(
+                                      padding: const EdgeInsets.all(12),
+                                      decoration: BoxDecoration(
+                                        color: const Color(0xFF30BF77),
+                                        borderRadius: BorderRadius.circular(25),
+                                      ),
+                                      child: const Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceEvenly,
+                                        children: [
+                                          Text(
+                                            "Yuborish",
+                                            style: TextStyle(
+                                                fontSize: 12,
+                                                color: Colors.white),
+                                          ),
+                                        ],
+                                      ),
                                     ),
                                   ),
                                 ),

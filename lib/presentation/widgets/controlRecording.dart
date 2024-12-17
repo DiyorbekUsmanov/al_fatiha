@@ -135,7 +135,7 @@ Widget controlRecording(
                                       Navigator.push(
                                         context,
                                         MaterialPageRoute(
-                                          builder: (context) => chatWidget([senderMessage]),
+                                          builder: (context) => chatWidget(),
                                         ),
                                       );
                                     }

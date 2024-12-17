@@ -1,8 +1,14 @@
-// message_items.dart
+import 'package:al_fatiha/presentation/widgets/message_items.dart';
 import 'package:flutter/material.dart';
-import '../../data/models/SenderMessageModel.dart';
+import '../../data/models/ReceivedMessageModel.dart';
 
-Widget chatWidget(List<SenderMessageModel> messages) {
+Widget chatWidget() {
+  final List<ReceivedMessageModel> messages = [
+    ReceivedMessageModel(
+        message: "Fotiha surasida yo‘l qo‘yilishi mumkin bo‘lgan xatolar",
+        videoUrl: "https://youtu.be/PLHddf-1MHY"),
+  ];
+
   return Padding(
     padding: const EdgeInsets.all(8.0),
     child: Container(
@@ -17,22 +23,6 @@ Widget chatWidget(List<SenderMessageModel> messages) {
           final message = messages[index];
           return buildSenderItem(context, message, isSender: true);
         },
-      ),
-    ),
-  );
-}
-
-Widget buildSenderItem(BuildContext context, SenderMessageModel message, {bool isSender = false}) {
-  return ListTile(
-    title: Text(message.text),
-    subtitle: GestureDetector(
-      onTap: () {
-        // TODO: Implement audio playback here
-      },
-      child: const Icon(
-        Icons.play_arrow,
-        size: 30,
-        color: Colors.green,
       ),
     ),
   );

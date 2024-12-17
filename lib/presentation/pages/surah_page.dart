@@ -23,7 +23,7 @@ class SurahPage extends StatelessWidget {
           ),
           Expanded(
             flex: 5,
-            child: chatWidget([]),
+            child: chatWidget(),
           ),
           Expanded(
             flex: 1,

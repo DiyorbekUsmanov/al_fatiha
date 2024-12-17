@@ -1,18 +1,18 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
+import '../../data/models/MessageModel.dart';
 import '../../data/models/ReceivedMessageModel.dart';
 import 'customYouTubePlayer.dart';
 
-Widget buildSenderItem(BuildContext context, ReceivedMessageModel message,
-    {required bool isSender}) {
+Widget buildReceivedItem(BuildContext context, MessageModel message) {
   return Padding(
     padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 8.0),
     child: Align(
-      alignment: isSender ? Alignment.centerLeft : Alignment.centerRight,
+      alignment: Alignment.centerLeft,
       child: Column(
         crossAxisAlignment:
-        isSender ? CrossAxisAlignment.start : CrossAxisAlignment.end,
+        CrossAxisAlignment.start ,
         children: [
           Container(
             width: MediaQuery.of(context).size.width * 0.8, // Use valid context here
@@ -31,7 +31,7 @@ Widget buildSenderItem(BuildContext context, ReceivedMessageModel message,
                   ),
                 const SizedBox(height: 8),
                 Text(
-                  message.message,
+                  message.message!,
                   style: const TextStyle(color: Colors.black, fontSize: 14),
                 ),
               ],

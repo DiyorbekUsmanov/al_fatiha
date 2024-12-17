@@ -1,9 +1,9 @@
 import 'package:al_fatiha/presentation/blocs/recitation_bloc.dart';
 import 'package:al_fatiha/presentation/blocs/recitation_state.dart';
+import 'package:al_fatiha/presentation/pages/surah_page.dart';
 import 'package:al_fatiha/presentation/widgets/chatwidget.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
+import '../../data/models/MessageModel.dart';
 import '../../data/models/SenderMessageModel.dart';
 import '../blocs/recitation_event.dart';
 
@@ -85,7 +85,7 @@ Widget controlRecording(
               )
             : state.status == "finished"
                 ? Column(
-                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    mainAxisAlignment: MainAxisAlignment.end,
                     children: [
                       Container(
                         decoration: const BoxDecoration(
@@ -105,39 +105,46 @@ Widget controlRecording(
                             children: [
                               Expanded(
                                 flex: 1,
-                                child: IconButton(
-                                  onPressed: () {
-                                    bloc.add(OnPlayRecording());
-                                  },
-                                  icon: const Icon(Icons.play_arrow),
-                                  style: ElevatedButton.styleFrom(
-                                    backgroundColor: Colors.grey[200], // Color of the button
+                                child: Container(
+                                  decoration: BoxDecoration(
+                                      color: Colors.grey[200],
+                                      shape: BoxShape.circle),
+                                  child: IconButton(
+                                    onPressed: () {
+                                      bloc.add(OnPlayRecording());
+                                    },
+                                    icon: const Icon(Icons.play_arrow),
+                                    style: ElevatedButton.styleFrom(
+                                      backgroundColor: Colors
+                                          .grey[200], // Color of the button
+                                    ),
                                   ),
                                 ),
                               ),
                               Expanded(
                                 flex: 5,
                                 child: Container(
-                                  padding: EdgeInsets.symmetric(horizontal: 4),
+                                  padding:
+                                      const EdgeInsets.symmetric(horizontal: 4),
                                   child: GestureDetector(
-                                    //TODO
-                                    // onTap: () {
-                                    //   final bloc = context.read<RecitationBloc>();
-                                    //
-                                    //   if (bloc.state.recordingPath != null) {
-                                    //     final senderMessage = SenderMessageModel(
-                                    //       text: "Fotiha surasini qiroat qilish",
-                                    //       audioPath: bloc.state.recordingPath!,
-                                    //     );
-                                    //
-                                    //     Navigator.push(
-                                    //       context,
-                                    //       MaterialPageRoute(
-                                    //         builder: (context) => chatWidget(),
-                                    //       ),
-                                    //     );
-                                    //   }
-                                    // },
+                                    onTap: () {
+                                      if (bloc.state.recordingPath != null) {
+                                        final senderMessage =
+                                        MessageModel(
+                                          audioPath: bloc.state.recordingPath!,
+                                          isSender: true,
+                                        );
+
+                                        Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                            builder: (context) => SurahPage(
+                                              senderMessage: senderMessage,
+                                            ),
+                                          ),
+                                        );
+                                      }
+                                    },
                                     child: Container(
                                       padding: const EdgeInsets.all(12),
                                       decoration: BoxDecoration(
@@ -162,14 +169,20 @@ Widget controlRecording(
                               ),
                               Expanded(
                                 flex: 1,
-                                child: IconButton(
-                                  onPressed: () {
-                                    bloc.add(OnStartRecording());
-                                  },
-                                  icon: const Icon(Icons.delete),
-                                  style: ElevatedButton.styleFrom(
-                                    backgroundColor:
-                                        Colors.grey[200], // Color of the button
+                                child: Container(
+                                  decoration: BoxDecoration(
+                                    color: Colors.grey[200], // Background color
+                                    shape: BoxShape
+                                        .circle, // Makes the shape circular
+                                  ),
+                                  child: IconButton(
+                                    onPressed: () {
+                                      bloc.add(OnStartRecording());
+                                    },
+                                    icon: const Icon(Icons.delete),
+                                    iconSize:
+                                        24, // Adjust the size of the icon if needed
+                                    color: Colors.black, // Color of the icon
                                   ),
                                 ),
                               ),

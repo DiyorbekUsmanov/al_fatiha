@@ -1,4 +1,3 @@
-import 'package:al_fatiha/data/models/SenderMessageModel.dart';
 import 'package:al_fatiha/presentation/widgets/received_message_card.dart';
 import 'package:al_fatiha/presentation/widgets/sent_message_card.dart';
 import 'package:flutter/material.dart';

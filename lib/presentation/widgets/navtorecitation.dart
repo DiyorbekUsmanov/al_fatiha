@@ -17,8 +17,8 @@ Widget navToRecitation(BuildContext context) {
       margin: const EdgeInsets.fromLTRB(4, 4, 4, 40),
       padding: const EdgeInsets.fromLTRB(12, 0, 12, 0),
       decoration: BoxDecoration(
-        color: Colors.grey[200], // Inner container grey background
-        borderRadius: BorderRadius.circular(25), // 25 radius all sides
+        color: Colors.grey[200],
+        borderRadius: BorderRadius.circular(25),
       ),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceAround,

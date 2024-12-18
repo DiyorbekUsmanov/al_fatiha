@@ -1,8 +1,5 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-
 import '../../data/models/MessageModel.dart';
-import '../../data/models/ReceivedMessageModel.dart';
 import 'customYouTubePlayer.dart';
 
 Widget buildReceivedItem(BuildContext context, MessageModel message) {
@@ -15,11 +12,11 @@ Widget buildReceivedItem(BuildContext context, MessageModel message) {
         CrossAxisAlignment.start ,
         children: [
           Container(
-            width: MediaQuery.of(context).size.width * 0.8, // Use valid context here
+            width: MediaQuery.of(context).size.width * 0.8,
             padding: const EdgeInsets.all(8.0),
             decoration: BoxDecoration(
-              color: Colors.grey[200], // Grey background
-              borderRadius: BorderRadius.circular(10), // 10 radius
+              color: Colors.grey[200],
+              borderRadius: BorderRadius.circular(10),
             ),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,

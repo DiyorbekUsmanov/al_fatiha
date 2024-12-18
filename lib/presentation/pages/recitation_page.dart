@@ -1,10 +1,8 @@
-import 'package:al_fatiha/core/services/log_services.dart';
 import 'package:al_fatiha/presentation/blocs/recitation_bloc.dart';
 import 'package:al_fatiha/presentation/widgets/controlRecording.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../data/models/SurahModel.dart';
-import '../blocs/recitation_event.dart';
 import '../blocs/recitation_state.dart';
 import '../widgets/customAppBar.dart';
 
@@ -30,7 +28,7 @@ class RecitationPage extends StatelessWidget {
       create: (context) => RecitationBloc(),
       child: Scaffold(
         extendBodyBehindAppBar: true,
-        backgroundColor: Colors.grey[200], // Extends background to the edges
+        backgroundColor: Colors.grey[200],
 
         body: BlocBuilder<RecitationBloc, RecitationState>(
           builder: (context, state) {
@@ -55,7 +53,6 @@ class RecitationPage extends StatelessWidget {
                       ),
                       child: Column(
                         children: [
-                          // Title of Surah
                           Text(
                             surah.title,
                             style: TextStyle(
@@ -68,7 +65,7 @@ class RecitationPage extends StatelessWidget {
 
                           ...surah.verses.asMap().entries.map((entry) {
                             int index =
-                                entry.key + 1; // Verse number starts from 1
+                                entry.key + 1;
                             String verse = entry.value;
 
                             return Padding(
@@ -87,7 +84,6 @@ class RecitationPage extends StatelessWidget {
                                     ),
                                     TextSpan(
                                       text: _getArabicNumber(index),
-                                      // Verse number in Arabic
                                       style: const TextStyle(
                                         fontSize: 18,
                                         color: Colors.green,

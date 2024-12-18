@@ -1,11 +1,9 @@
 import 'package:al_fatiha/presentation/blocs/recitation_bloc.dart';
 import 'package:al_fatiha/presentation/blocs/recitation_state.dart';
 import 'package:al_fatiha/presentation/pages/surah_page.dart';
-import 'package:al_fatiha/presentation/widgets/chatwidget.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import '../../data/models/MessageModel.dart';
-import '../../data/models/SenderMessageModel.dart';
 import '../blocs/recitation_event.dart';
 
 Widget controlRecording(
@@ -117,7 +115,7 @@ Widget controlRecording(
                                     icon: const Icon(Icons.play_arrow),
                                     style: ElevatedButton.styleFrom(
                                       backgroundColor: Colors
-                                          .grey[200], // Color of the button
+                                          .grey[200],
                                     ),
                                   ),
                                 ),
@@ -170,9 +168,9 @@ Widget controlRecording(
                                 flex: 1,
                                 child: Container(
                                   decoration: BoxDecoration(
-                                    color: Colors.grey[200], // Background color
+                                    color: Colors.grey[200],
                                     shape: BoxShape
-                                        .circle, // Makes the shape circular
+                                        .circle,
                                   ),
                                   child: IconButton(
                                     onPressed: () {
@@ -180,8 +178,8 @@ Widget controlRecording(
                                     },
                                     icon: const Icon(Icons.delete),
                                     iconSize:
-                                        24, // Adjust the size of the icon if needed
-                                    color: Colors.black, // Color of the icon
+                                        24,
+                                    color: Colors.black,
                                   ),
                                 ),
                               ),

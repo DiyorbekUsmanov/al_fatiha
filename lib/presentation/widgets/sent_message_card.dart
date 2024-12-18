@@ -19,7 +19,7 @@ class _SentMessageWidgetState extends State<SentMessageWidget> {
   Duration? _audioDuration;
   bool _isPlaying = false;
 
-  List<double> _waveformSamples = []; // Store waveform samples
+  List<double> _waveformSamples = [];
 
   @override
   void initState() {
@@ -43,22 +43,25 @@ class _SentMessageWidgetState extends State<SentMessageWidget> {
 
   void _listenToWaveform() {
     _audioPlayer.positionStream.listen((position) {
-      final total = _audioDuration?.inMilliseconds ?? 1; // Total audio duration in milliseconds
-      final current = position.inMilliseconds; // Current audio position in milliseconds
+      final total = _audioDuration?.inMilliseconds ?? 1;
+      final current = position.inMilliseconds;
 
       if (total > 0) {
-        final progress = current / total; // Fraction of progress (0.0 to 1.0)
+        final progress = current / total;
 
-        setState(() {
-          // Generate dynamic waveform samples based on progress
-          _waveformSamples = List.generate(
-            60, // Number of waveform steps
-                (index) {
-              final stepProgress = index / 60; // Step's position as a fraction of total
-              return stepProgress <= progress ? (index % 10 + 5).toDouble() : 2.0;
-            },
-          );
-        });
+        setState(
+          () {
+            _waveformSamples = List.generate(
+              60,
+              (index) {
+                final stepProgress = index / 60;
+                return stepProgress <= progress
+                    ? (index % 10 + 5).toDouble()
+                    : 2.0;
+              },
+            );
+          },
+        );
       }
     });
   }
@@ -137,7 +140,8 @@ class _SentMessageWidgetState extends State<SentMessageWidget> {
                           //       style: TextStyle(color: Colors.grey[400]),
                           //     ),),
                           child: PolygonWaveform(
-                            samples: _waveformSamples, // Updated list of samples
+                            samples: _waveformSamples,
+                            // Updated list of samples
                             height: 10,
                             width: MediaQuery.of(context).size.width * 0.5,
                             absolute: true,
@@ -146,7 +150,6 @@ class _SentMessageWidgetState extends State<SentMessageWidget> {
                           ),
                         ),
                       ),
-
 
                       Text(
                         _audioDuration != null

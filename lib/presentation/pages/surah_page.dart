@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 
 import '../../core/services/save_service.dart';
 import '../../data/models/MessageModel.dart';
-import '../../data/models/SenderMessageModel.dart';
 import '../widgets/chatwidget.dart';
 import '../widgets/navtorecitation.dart';
 
@@ -32,7 +31,7 @@ class _SurahPageState extends State<SurahPage> {
   }
 
   Future<List<MessageModel>> getSenderMessages() async {
-    final messages = await getMessages(); // Replace with your actual method
+    final messages = await getMessages();
     return messages;
   }
 
@@ -42,12 +41,12 @@ class _SurahPageState extends State<SurahPage> {
     senderMessageModels.addAll(senderMessages);
 
     return Scaffold(
-      extendBodyBehindAppBar: true, // Extends the body behind the app bar
-      backgroundColor: Colors.grey[200], // Extends background to the edges
+      extendBodyBehindAppBar: true,
+      backgroundColor: Colors.grey[200],
       body: Column(
         children: [
           SizedBox(
-            height: MediaQuery.of(context).padding.top, // Top padding for status bar
+            height: MediaQuery.of(context).padding.top,
           ),
           Expanded(
             flex: 1,

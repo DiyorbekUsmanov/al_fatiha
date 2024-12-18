@@ -1,7 +1,8 @@
+import 'package:al_fatiha/core/services/log_services.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_audio_waveforms/flutter_audio_waveforms.dart';
 import 'package:just_audio/just_audio.dart';
 import '../../data/models/MessageModel.dart';
-import '../../data/models/SenderMessageModel.dart';
 import 'dart:async';
 
 class SentMessageWidget extends StatefulWidget {
@@ -18,25 +19,50 @@ class _SentMessageWidgetState extends State<SentMessageWidget> {
   Duration? _audioDuration;
   bool _isPlaying = false;
 
+  List<double> _waveformSamples = []; // Store waveform samples
+
   @override
   void initState() {
     super.initState();
     _loadAudio();
+    _listenToWaveform();
   }
 
-  // Load audio to get its duration
   Future<void> _loadAudio() async {
     try {
       await _audioPlayer.setFilePath(widget.message.audioPath!);
       setState(() {
         _audioDuration = _audioPlayer.duration;
       });
+      LogService.w("Audio Duration: $_audioDuration");
+      _listenToWaveform();
     } catch (e) {
       print("Error loading audio: $e");
     }
   }
 
-  // Toggle play/pause
+  void _listenToWaveform() {
+    _audioPlayer.positionStream.listen((position) {
+      final total = _audioDuration?.inMilliseconds ?? 1; // Total audio duration in milliseconds
+      final current = position.inMilliseconds; // Current audio position in milliseconds
+
+      if (total > 0) {
+        final progress = current / total; // Fraction of progress (0.0 to 1.0)
+
+        setState(() {
+          // Generate dynamic waveform samples based on progress
+          _waveformSamples = List.generate(
+            60, // Number of waveform steps
+                (index) {
+              final stepProgress = index / 60; // Step's position as a fraction of total
+              return stepProgress <= progress ? (index % 10 + 5).toDouble() : 2.0;
+            },
+          );
+        });
+      }
+    });
+  }
+
   Future<void> _togglePlay() async {
     if (_isPlaying) {
       await _audioPlayer.pause();
@@ -68,7 +94,7 @@ class _SentMessageWidgetState extends State<SentMessageWidget> {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 8.0),
       child: Align(
-        alignment: Alignment.centerRight, // Sent messages align to the right
+        alignment: Alignment.centerRight,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.end,
           children: [
@@ -77,7 +103,6 @@ class _SentMessageWidgetState extends State<SentMessageWidget> {
               padding: const EdgeInsets.all(8.0),
               decoration: BoxDecoration(
                 color: Colors.blue[50],
-                // Light blue background for sent messages
                 borderRadius: BorderRadius.circular(10),
               ),
               child: Column(
@@ -100,23 +125,29 @@ class _SentMessageWidgetState extends State<SentMessageWidget> {
                       ),
                       const SizedBox(width: 8),
 
-                      // Placeholder for Audio Waveform
+                      // Waveform
                       Expanded(
-                        child: Container(
+                        child: SizedBox(
                           height: 40,
-                          color: Colors.transparent,
-                          // Replace with waveform widget
-                          child: Center(
-                            child: Text(
-                              "🎵 Audio Wave (placeholder)",
-                              // Replace with wave UI
-                              style: TextStyle(color: Colors.grey[400]),
-                            ),
+                          // child:
+                          // Center(
+                          //     child: Text(
+                          //       "Place for Audio Wave",
+                          //       // Replace with wave UI
+                          //       style: TextStyle(color: Colors.grey[400]),
+                          //     ),),
+                          child: PolygonWaveform(
+                            samples: _waveformSamples, // Updated list of samples
+                            height: 10,
+                            width: MediaQuery.of(context).size.width * 0.5,
+                            absolute: true,
+                            inactiveColor: Colors.grey.shade300,
+                            activeColor: Colors.blue,
                           ),
                         ),
                       ),
 
-                      // Audio Duration
+
                       Text(
                         _audioDuration != null
                             ? _formatDuration(_audioDuration!)
@@ -150,7 +181,6 @@ class _SentMessageWidgetState extends State<SentMessageWidget> {
     );
   }
 
-  // Format audio duration to "mm:ss"
   String _formatDuration(Duration duration) {
     String twoDigits(int n) => n.toString().padLeft(2, "0");
     final minutes = twoDigits(duration.inMinutes.remainder(60));

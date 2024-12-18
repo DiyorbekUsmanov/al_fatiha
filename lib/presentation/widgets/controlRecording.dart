@@ -2,6 +2,7 @@ import 'package:al_fatiha/presentation/blocs/recitation_bloc.dart';
 import 'package:al_fatiha/presentation/blocs/recitation_state.dart';
 import 'package:al_fatiha/presentation/pages/surah_page.dart';
 import 'package:al_fatiha/presentation/widgets/chatwidget.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import '../../data/models/MessageModel.dart';
 import '../../data/models/SenderMessageModel.dart';
@@ -124,8 +125,7 @@ Widget controlRecording(
                               Expanded(
                                 flex: 5,
                                 child: Container(
-                                  padding:
-                                      const EdgeInsets.symmetric(horizontal: 4),
+                                  padding:const EdgeInsets.symmetric(horizontal: 4),
                                   child: GestureDetector(
                                     onTap: () {
                                       if (bloc.state.recordingPath != null) {
@@ -134,13 +134,12 @@ Widget controlRecording(
                                           audioPath: bloc.state.recordingPath!,
                                           isSender: true,
                                         );
+                                        bloc.add(OnSendRecording(senderMessage));
 
                                         Navigator.push(
                                           context,
-                                          MaterialPageRoute(
-                                            builder: (context) => SurahPage(
-                                              senderMessage: senderMessage,
-                                            ),
+                                          CupertinoPageRoute(
+                                            builder: (context) => SurahPage(),
                                           ),
                                         );
                                       }

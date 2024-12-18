@@ -4,6 +4,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:just_audio/just_audio.dart';
 import 'package:record/record.dart';
 import 'package:path_provider/path_provider.dart';
+import '../../core/services/save_service.dart';
+import '../../data/models/MessageModel.dart';
 import 'recitation_event.dart';
 import 'recitation_state.dart';
 
@@ -13,11 +15,11 @@ class RecitationBloc extends Bloc<RecitationEvent, RecitationState> {
   String? _filePath;
 
   RecitationBloc() : super(RecitationState.initial()) {
+
     on<OnStartRecording>((event, emit) async {
       try {
         final directory = await getApplicationDocumentsDirectory();
-        final fileName =
-            'recording_${DateTime.now().millisecondsSinceEpoch}.m4a';
+        final fileName = 'recording_${DateTime.now().millisecondsSinceEpoch}.mp3';
         _filePath = '${directory.path}/$fileName';
 
         const config = RecordConfig(
@@ -86,10 +88,21 @@ class RecitationBloc extends Bloc<RecitationEvent, RecitationState> {
           await File(_filePath!).copy(newFilePath);
           _filePath = newFilePath;
 
-          emit(state.copyWith(
-            status: 'sent',
-            recordingPath: _filePath,
-          ));
+
+          if (_filePath!.isNotEmpty){
+            final message = MessageModel(
+              audioPath: _filePath,
+              isSender: event.message.isSender,
+              time: event.message.time ?? DateTime.now().toIso8601String(),
+            );
+
+            await saveMessage(message);
+
+            emit(state.copyWith(
+              status: 'sent',
+              recordingPath: _filePath,
+            ));
+          }
         } else {
           emit(state.copyWith(
             status: 'error',
